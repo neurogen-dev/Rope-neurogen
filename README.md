@@ -1,90 +1,95 @@
-# Rope
-Rope implements the insightface inswapper_128 model with a helpful GUI.
+Rope реализует модель inswapper_128 для работы с библиотекой InsightFace с помощью графического интерфейса (GUI).
 
-### Discord link: ###
+### Ссылка на Discord: ###
 [Discord](https://discord.gg/5CxhgRKBdN)
 
-### Changes: ###
-I suggest a fresh reinstall, since some of the filenames have changed. I updated the installation instructions below. Please note that there is a new onnx file...
-* Modified inswapper.onnx file to be faster (13 ms -> 9 ms per swap on my 3090)
-* Added CLIP (txt2mask) to specify masked and unmasked areas on and around the face
-* Record button - press record and anything that you play is recorded to a video file (good for just capturing segments)
-* Specify the output video directory
-* Updated GUI
-* Updated the video creation logic to fix a bug
-* Fixed bad colors in skin and GFPGAN
 
-### Preview: ###
+### Изменения: ###
+Я рекомендую выполнить полное переустановку, так как некоторые имена файлов были изменены. Я обновил инструкции по установке ниже. Обратите внимание, что появился новый файл onnx...
+* Изменен файл inswapper.onnx для повышения скорости работы (13 мс -> 9 мс на обмен на моем 3090)
+* Добавлен CLIP (txt2mask) для указания зон с маскировкой и без нее вокруг лица
+* Кнопка записи - нажмите запись, и все, что вы воспроизводите, будет записано в видеофайл (хорошо подходит для записи отрезков)
+* Указание каталога для сохранения видео
+* Обновленный GUI
+* Обновлена логика создания видео для исправления ошибки
+* Исправлены неправильные цвета в скине и GFPGAN
+
+
+### Превью: ###
 ![Screenshot 2023-07-22 143839](https://github.com/Hillobar/Rope/assets/63615199/5a987ed6-66fd-441f-b6c1-4c6e1f12f34b)
 
-### New CLIP feature: ###
+
+### Новая функция CLIP: ###
 ![Screenshot 2023-07-21 145531](https://github.com/Hillobar/Rope/assets/63615199/fe9f88cf-4d29-4b24-adc1-e2e2a4b876a2)
 
-### Disclaimer: ###
-Rope is a personal project that I'm making available to the community as a thank you for all of the contributors ahead of me. I don't have time to troubleshoot or add requested features, so it is provided as-is. Don't look at this code for example of good coding practices. I am primarily focused on performance and my specific use cases. There are plenty of ways to bork the workflow. Please see how to use below.
 
-### Features: ###
-* Real-time video player
-* Optimized model paths (runs >30fps with GFPGAN on 3090Ti)
-* Resizeable window
-* Load, view, and select Source Videos and Source Faces from specified folders
-* Identify Target Faces from current frame
-* Map multiple Source Faces to mutiple Target Faces
-* GFPGAN with blending
-* Diffing with blending
-* Adjust Face boudaries to match Source and Target Faces, with blending
-* Set threads
-* Set face matching threshhold
-* Create videos with current settings
-* Created videos add audio and compress file size
-  
-### Install: ###
-Note: It's only configured for CUDA (Nvidia)
-* Set up a local venv
+### Отказ от ответственности: ###
+Rope - это личный проект, который я делюсь с сообществом в знак благодарности всем предшествующим авторам. У меня нет времени на поиск и устранение ошибок или добавление запросов пользователей, поэтому предоставляется "как есть". Не используйте этот код в качестве примера хороших программных практик. Я сосредоточен преимущественно на производительности и конкретных случаях использования. Есть много способов испортить рабочий процесс. Пожалуйста, ознакомьтесь с инструкцией по использованию ниже.
+
+
+### Функции: ###
+* Воспроизведение видео в реальном времени
+* Оптимизированные пути моделей (фпс >30 с GFPGAN на 3090Ti)
+* Изменяемое окно
+* Загрузка, просмотр и выбор исходных видео и исходных лиц из указанных папок
+* Идентификация целевых лиц в текущем кадре
+* Привязка нескольких исходных лиц к нескольким целевым лицам
+* GFPGAN с смешиванием
+* Diffing с смешиванием
+* Изменение границ лица, чтобы совпадало с исходными и целевыми лицами, с смешиванием
+* Установка потоков
+* Установка порога сопоставления лиц
+* Создание видео с текущими настройками
+* Использование звукового сопровождения и сжатие видео
+
+
+### Установка: ###
+Примечание: Настроено только для CUDA (Nvidia)
+* Создайте локальное виртуальное окружение (venv)
   * python.exe -m venv venv
-* Activate your new venv
+* Активируйте новое виртуальное окружение
   * .\venv\Scripts\activate
-* Install requirements
+* Установите необходимые пакеты
   * .\venv\Scripts\pip.exe install -r .\requirements.txt
-* Place [GFPGANv1.4.onnx](https://github.com/Hillobar/Rope/releases/download/v1.0/GFPGANv1.4.onnx)  and [inswapper_128_fp16.onnx](https://github.com/Hillobar/Rope/releases/download/v1.0/inswapper_128.fp16.onnx) in the root directory
-* Do this if you've never installed roop or Rope (or any other onnx runtimes):
-  * Install CUDA Toolkit 11.8
-  * Install dependencies:
+* Разместите файлы [GFPGANv1.4.onnx](https://github.com/Hillobar/Rope/releases/download/v1.0/GFPGANv1.4.onnx) и [inswapper_128_fp16.onnx](https://github.com/Hillobar/Rope/releases/download/v1.0/inswapper_128.fp16.onnx) в корневой каталог
+* Если вы никогда не устанавливали roop или другие средства выполнения onnx:
+  * Установите CUDA Toolkit 11.8
+  * Установите зависимости:
   * pip uninstall onnxruntime onnxruntime-gpu
   * pip install onnxruntime-gpu==1.15.1
-* Double-click on Rope.bat!
+* Дважды щелкните по файлу Rope.bat!
 
-### To use: ###
-* Run Rope.bat
-* Set your Target Video, Source Faces, and Video Output folders
-  * Buttons will be gold if they are not set
-  * Only places videos or images in the respective folders. Other files my bork it
-  * Rope creates a JSON file to remember your last set paths
-  * I like to keep my folders <20 or so items. Helps to organize and reduces load times
-* Click on the Load Models button to initialize Rope
-* Select a video to load it into the player
-* Find Target Faces
-  * Adds all faces in the current frame to the Found Faces pane
-  * If a Face is already Found and in the pane, it won't re-add it
-* Click a Source Face
-  * Source Face number will appear
-* Select a Target Face
-  * Target Faces will show assignment number to the Source Face number
-  * Toggle a Target Face to unselect and reassign to currently selected Source Face
-* Continue to select other Source Faces and assign them to Target Faces
-* Click SWAP to enable face swapping
-* Click PLAY to play
-* Click REC to arm recording
-  * Click PLAY to start recording using the current settings
-  * Click PLAY again to stop recording, otherwise it will record to the end of the Target Video
-* Toggle GFPGAN, adjust blending amount
-* Toggle Diffing, adjust blending maount
-* Lower the threshhold if you have multiple Source Faces assigned and they are jumping around. You can also try Clearing and Finding new Target Faces (disable SWAP first)
-* Modify the Masking boudaries
-* Use CLIP to identify objects to swap or not swap (e.g Pos: face, head; Neg: hair, hand), adjust the gain of the words, and set the blur amount around the items
-* Change # threads to match your GPU memory (24GB ~9 threads with GFPGAN on, more threads w/o GFPGAN)
-  * Start with the lowest you think will run and watch your GPU memory.
-  * Once you allocate memory by increasing # threads, you can't un-allocate it by reducing # threads. You will need to restart Rope.
-* In general, always stop the video before changing anything. Otherwise, it might bork. Reassigning faces is okay
-* If it does bork, reload the video (reclick on it). If that doesn't work you'll need to restart
-  
+
+### Использование: ###
+* Запустите Rope.bat
+* Установите целевое видео, исходные лица и папку вывода видео
+  * Кнопки станут золотыми, если они не установлены
+  * Допустимы только видео и изображения в соответствующих папках. Другие файлы могут вызвать ошибку
+  * Rope создает JSON-файл для запоминания последних установленных путей
+  * Я предпочитаю ограничивать количество файлов в папках не более 20. Это помогает в организации и уменьшает время загрузки
+* Щелкните кнопку Load Models для инициализации Rope
+* Выберите видео для его загрузки в плеер
+* Найдите целевые лица
+  * Добавляет все лица в текущем кадре в панель Found Faces
+  * Если лицо уже найдено и находится в панели, оно не будет добавлено повторно
+* Щелкните на исходное лицо
+  * Появится номер исходного лица
+* Выберите целевое лицо
+  * Целевые лица будут показывать номер привязанного исходного лица
+  * Переключение целевого лица отменяет выбор и переназначает текущему выбранному исходному лицу
+* Продолжайте выбирать другие исходные лица и назначать их целевым лицам
+* Нажмите SWAP, чтобы включить обмен лицами
+* Нажмите PLAY для воспроизведения
+* Нажмите REC для запуска записи
+  * Нажмите PLAY для начала записи с использованием текущих настроек
+  * Нажмите PLAY еще раз, чтобы остановить запись, иначе она будет продолжаться до конца целевого видео
+* Переключайте GFPGAN, регулируйте количество смешивания
+* Переключайте Diffing, регулируйте количество смешивания
+* Уменьшите порог, если у вас назначено несколько исходных лиц и они прыгают. Также можно попробовать очистить и найти новые целевые лица (сначала отключите SWAP)
+* Измените границы маскировки
+* Используйте CLIP для определения объектов для замены или сохранения (например, Pos: лицо, голова; Neg: волосы, рука), регулируйте уровень воздействия слов и устанавливайте уровень размытия вокруг объектов
+* Измените количество потоков в соответствии с доступной памятью вашей графической карты (24 ГБ ~9 потоков с активированным GFPGAN, больше потоков при его отключении)
+  * Начните с наименьшего количества потоков, которое вы считаете подходящим, и следите за использованием памяти графической карты.
+  * После выделения памяти, увеличивая количество потоков, вы не сможете уменьшить его, уменьшив количество потоков. Вам придется перезапустить Rope.
+* В общем случае всегда остановите видео перед изменением чего-либо. В противном случае его работа может быть нарушена. Переназначение лиц допустимо
+* Если что-то пошло не так, перезагрузите видео (кликните на него снова). Если это не помогает, вам нужно будет перезапустить
