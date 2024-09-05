@@ -1,7 +1,21 @@
-Rope реализует модель inswapper_128 для работы с библиотекой InsightFace с помощью графического интерфейса (GUI).
+###
 
-### Ссылка на Discord: ###
-[Discord](https://discord.gg/5CxhgRKBdN)
+This is a portable version of the Rope DeepFake editor.
+
+# Instructions:
+
+Download all the archives and then unzip the first one. The rest will unpack automatically.
+
+Download link: https://boosty.to/neurogen/posts/9de2aa64-f681-466d-ae1a-4dd5f58f9401?share=post_link
+
+After unpacking, run the file start_portable_nvidia.bat 
+
+You can also support the project and download the latest updated versions, with many unofficial modifications from the community:
+
+https://boosty.to/neurogen
+
+###
+Rope реализует модель inswapper_128 для работы с библиотекой InsightFace с помощью графического интерфейса (GUI).
 
 
 ### Изменения: ###
